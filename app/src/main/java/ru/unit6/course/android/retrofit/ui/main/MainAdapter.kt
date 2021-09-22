@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import ru.unit6.course.android.retrofit.R
 import ru.unit6.course.android.retrofit.data.model.User
 
-class MainAdapter(private val users: ArrayList<User>) : RecyclerView.Adapter<MainAdapter.DataViewHolder>() {
+class MainAdapter(private val users: ArrayList<User>,val itemClickListener: (View, Int, Int) -> Unit) : RecyclerView.Adapter<MainAdapter.DataViewHolder>() {
 
     class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -27,15 +27,26 @@ class MainAdapter(private val users: ArrayList<User>) : RecyclerView.Adapter<Mai
                     .into(imageViewAvatar)
             }
         }
+
+        fun onClick(itemClickListener: (View, Int, Int) -> Unit) {}
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder =
-        DataViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_layout, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
+
+        //DataViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_layout, parent, false))
+        var view = LayoutInflater.from(parent.context).inflate(R.layout.item_layout, parent, false)
+        val vh = DataViewHolder(view);
+        vh.onClick(itemClickListener)
+        return vh
+    }
 
     override fun getItemCount(): Int = users.size
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
         holder.bind(users[position])
+        holder.itemView.setOnClickListener { view ->
+            itemClickListener.invoke(view,users[position].id.toInt(),2)
+        }
     }
 
     fun addUsers(users: List<User>) {
