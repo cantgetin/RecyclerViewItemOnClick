@@ -2,6 +2,7 @@ package ru.unit6.course.android.retrofit
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import ru.unit6.course.android.retrofit.data.database.AppDatabase
 import ru.unit6.course.android.retrofit.ui.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
@@ -14,5 +15,7 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.container, MainFragment.newInstance())
                 .commitNow()
         }
+
+        AppDatabase.invoke(applicationContext)
     }
 }
