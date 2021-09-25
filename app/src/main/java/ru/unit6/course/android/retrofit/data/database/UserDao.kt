@@ -5,6 +5,7 @@ import ru.unit6.course.android.retrofit.data.model.UserDB
 
 @Dao
 interface UserDao {
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUser(user: UserDB)
 
@@ -19,4 +20,7 @@ interface UserDao {
 
     @Query("SELECT * FROM users")
     suspend fun getAllUsers(): List<UserDB>
+
+    @Query("SELECT * FROM users WHERE id = :selected_id")
+    suspend fun getUser(selected_id: Int): UserDB
 }

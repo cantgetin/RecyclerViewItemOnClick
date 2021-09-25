@@ -17,11 +17,11 @@ import ru.unit6.course.android.retrofit.data.model.User
 import ru.unit6.course.android.retrofit.data.model.UserDB
 import ru.unit6.course.android.retrofit.utils.Status
 
-class MainFragment : Fragment() {
+class MainFragment(val itemClickListener: (View, Int, Int) -> Unit) : Fragment() {
 
-    companion object {
+    /*companion object {
         fun newInstance() = MainFragment()
-    }
+    }*/
 
     private lateinit var viewModel: MainViewModel
     private lateinit var adapter: MainAdapter
@@ -54,7 +54,7 @@ class MainFragment : Fragment() {
 
     private fun setupUI() {
         recyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = MainAdapter(arrayListOf())
+        adapter = MainAdapter(arrayListOf(),itemClickListener)
         recyclerView.addItemDecoration(
             DividerItemDecoration(
                 recyclerView.context,
